@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg id="eye" viewBox="0 0 120 120">
+    <svg id="eye" viewBox="0 0 120 120" v-on:mousemove="follow(evt)">
       <filter id="shadow">
         <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
         <feOffset       dx="0" dy="8" />
@@ -30,46 +30,43 @@
 </template>
 
 <script>
-
 export default {
   name: "SvgEyesVanilla",
-  methods: {
-    eyeBinding(id) {
-      const rect          = document.querySelectorAll(id + "_iris ellipse")[0].getBoundingClientRect();
-      const iris          = document.querySelector(id + "_iris");
-
-      const xo = rect.x + rect.width/2;  // x-origin
-      const yo = rect.y + rect.height/2; // y-origin
-
-      return evt => {
-        const xm = evt.clientX - xo; // the normalized x/y coords to work with
-        const ym = evt.clientY - yo;
-
-        const xmax = rect.width/1.5;
-        const ymax = rect.height/2;
-
-        const widestFocus = 400; // when x is so far away, the eye is maximal extended
-        const scaledX = xm * (xmax / widestFocus );
-        let   xe = xm > 0
-            ? Math.min( xmax, scaledX)
-            : Math.max(-xmax, scaledX);
-        const scaledY = ym * (ymax / widestFocus );
-        let   ye = ym > 0
-            ? Math.min( ymax, scaledY)
-            : Math.max(-ymax, scaledY);
-        if (xe*xe + ye*ye > xmax * ymax) {
-          xe *= 0.9;
-          ye *= 0.9;
-        }
-        iris.style.transform = `translateX(${xe}px) translateY(${ye}px)`;
-      }
+  data() {
+    return {
+      rect:document.querySelector("eye_iris ellipse")[0].getBoundingClientRect(),
+      iris:document.querySelector("eye_iris"),
+      xo:this.rect.x + this.rect.width/2,
+      yo:this.rect.y + this.rect.height/2,
+      xm:0,
+      ym:0,
+      xmax:this.rect.width/1.5,
+      ymax:this.rect.height/2,
+      widestFocus:400,
+      scaledX:0,
+      xe:0,
+      scaledY:0,
+      ye:0,
     }
   },
-  mounted: function () {
-    document.addEventListener('onmousemove', evt => {
-      const leftListener  = this.eyeBinding('#eye')
-      leftListener(evt);
-    })
+  methods: {
+    follow(evt) {
+      this.xm = evt.clientX;
+      this.ym = evt.clientY;
+      this.scaledX = this.xm * (this.xmax / this.widestFocus );
+      this.xe = this.xm > 0
+          ? Math.min( this.xmax, this.scaledX)
+          : Math.max(-this.xmax, this.scaledX);
+      this.scaledY = this.ym * (this.ymax / this.widestFocus );
+      this.ye = this.ym > 0
+          ? Math.min( this.ymax, this.scaledY)
+          : Math.max(-this.ymax, this.scaledY);
+      if (this.xe*this.xe + this.ye*this.ye > this.xmax * this.ymax) {
+        this.xe *= 0.9;
+        this.ye *= 0.9;
+      }
+      this.iris.style.transform = `translateX(${this.xe}px) translateY(${this.ye}px)`;
+    }
   }
 }
 
