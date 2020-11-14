@@ -44,7 +44,11 @@
     `;
 
     document.writeln(eyeView('leftEye'));
+    document.getElementById("leftEye").style.height = "60px";
+    document.getElementById("leftEye").style.width = "60px";
     document.writeln(eyeView('rightEye'));
+    document.getElementById("rightEye").style.height = "60px";
+    document.getElementById("rightEye").style.width = "60px";
 
     //const v  = 14; // versatz - Abstand des Pupillenzentrums vom Augenzentrum in SVG units
 
