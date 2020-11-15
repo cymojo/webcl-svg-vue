@@ -1,15 +1,13 @@
 <template>
-    <div>
-
-    </div>
+ <div></div>
 </template>
 
 <script>
-    export default {
-        name: "SvgEyesVanilla"
-    }
-
-    const eyeView = id => `
+export default {
+  name: "SvgEyesVanilla"
+}
+/*
+const eyeView = id => `
     <svg id="${id}" viewBox="0 0 120 120">
 
       <filter id="shadow">
@@ -101,22 +99,27 @@
         leftListener(evt);
         rightListener(evt);
     }
+    iris.style.transform = `translateX(${xe}px) translateY(${ye}px)`;
+  }
+};
+
+const leftListener  = eyeBinding('#leftEye');
+const rightListener = eyeBinding('#rightEye');
+
+document.onmousemove = evt => { // highlander pattern
+  leftListener(evt);
+  rightListener(evt);
+}
+*/
 
 </script>
 
 <style scoped>
-    svg {
-        width:  100px;
-        height: 80px;
-        position: absolute;
-    }
-    #leftEye {
-        top:  100px;
-        left: 100px;
-    }
-    #rightEye {
-        top:  100px;
-        left: 250px;
-    }
-
+  svg {
+    width: 100px;
+    height: 80px;
+    position: absolute;
+    left: 100px;
+    top: 450px;
+  }
 </style>
