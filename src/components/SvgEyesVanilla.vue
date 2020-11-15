@@ -1,6 +1,6 @@
-<template>
+<template v-on:mousemove="follow(evt)">
   <div>
-    <svg id="eye" viewBox="0 0 120 120" v-on:mousemove="follow(evt)">
+    <svg id="eye" viewBox="0 0 120 120">
       <filter id="shadow">
         <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
         <feOffset       dx="0" dy="8" />
@@ -34,14 +34,17 @@ export default {
   name: "SvgEyesVanilla",
   data() {
     return {
-      rect:document.querySelector("eye_iris ellipse")[0].getBoundingClientRect(),
+      x: 130,
+      y:470,
+      width:40,
+      height:40,
       iris:document.querySelector("eye_iris"),
-      xo:this.rect.x + this.rect.width/2,
-      yo:this.rect.y + this.rect.height/2,
+      xo:this.x + this.width/2,
+      yo:this.y + this.height/2,
       xm:0,
       ym:0,
-      xmax:this.rect.width/1.5,
-      ymax:this.rect.height/2,
+      xmax:this.width/1.5,
+      ymax:this.height/2,
       widestFocus:400,
       scaledX:0,
       xe:0,
@@ -77,6 +80,8 @@ svg {
   width:  100px;
   height: 80px;
   position: absolute;
+  left: 100px;
+  top: 450px;
 }
 #leftEye {
   top:  100px;
