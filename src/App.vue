@@ -8,7 +8,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import Eye from './components/SvgEyesVanilla.vue'
+import Eye from './components/SvgEyesVue.vue'
 
 export default {
   name: 'App',
