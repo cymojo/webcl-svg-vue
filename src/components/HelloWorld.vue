@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <svg-eyes-vanilla></svg-eyes-vanilla>
-    <svg-eyes-vue></svg-eyes-vue>
+    <SvgEyesVanilla></SvgEyesVanilla>
+    <SvgEyesVue></SvgEyesVue>
   </div>
 </template>
 
@@ -37,7 +37,11 @@ li {
 a {
   color: #42b983;
 }
-  svg-eyes-vanilla {
+  SvgEyesVanilla {
     width: 200px;
   }
+
+SvgEyesVue {
+  visibility: hidden;
+}
 </style>
