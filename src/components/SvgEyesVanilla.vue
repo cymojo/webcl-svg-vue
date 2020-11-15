@@ -1,5 +1,5 @@
-<template v-on:mousemove="follow(evt)">
-  <div>
+<template>
+  <div id="all-area" v-on:mousemove="follow">
     <svg id="eye" viewBox="0 0 120 120">
       <filter id="shadow">
         <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
@@ -39,28 +39,54 @@ export default {
       width:40,
       height:40,
       iris:document.querySelector("eye_iris"),
-      xo:this.x + this.width/2,
-      yo:this.y + this.height/2,
+      xo:150,
+      yo:490,
       xm:0,
       ym:0,
-      xmax:this.width/1.5,
-      ymax:this.height/2,
+      xmax:27,
+      ymax:20,
       widestFocus:400,
       scaledX:0,
       xe:0,
       scaledY:0,
       ye:0,
+      /*
+      rect:document.querySelector("eye_iris ellipse")[0].getBoundingClientRect(),
+      iris:document.querySelector("eye_iris"),
+      xo:this.rect.x + this.rect.width/2,
+      yo:this.rect.y + this.rect.height/2,
+      xm:0,
+      ym:0,
+      xmax:this.rect.width/1.5,
+      ymax:this.rect.height/2,
+      widestFocus:400,
+      scaledX:0,
+      xe:0,
+      scaledY:0,
+      ye:0,
+       */
     }
   },
   methods: {
     follow(evt) {
-      this.xm = evt.clientX;
-      this.ym = evt.clientY;
+      this.xm = evt.clientX - this.xo;
+      this.ym = evt.clientY - this.yo;
+
+      console.log(`xo: ${this.xo}, yo ${this.yo}`);
+      console.log(`Mouse x: ${this.xm}, Mouse y ${this.ym}`);
+
       this.scaledX = this.xm * (this.xmax / this.widestFocus );
+
+      console.log(`xmax: ${this.xmax}, widestFocus: ${this.widestFocus}`);
+      console.log(`scaledX: ${this.scaledX}`);
+
       this.xe = this.xm > 0
           ? Math.min( this.xmax, this.scaledX)
           : Math.max(-this.xmax, this.scaledX);
       this.scaledY = this.ym * (this.ymax / this.widestFocus );
+
+      console.log(`scaledY: ${this.scaledY}`);
+
       this.ye = this.ym > 0
           ? Math.min( this.ymax, this.scaledY)
           : Math.max(-this.ymax, this.scaledY);
@@ -68,7 +94,10 @@ export default {
         this.xe *= 0.9;
         this.ye *= 0.9;
       }
-      this.iris.style.transform = `translateX(${this.xe}px) translateY(${this.ye}px)`;
+      console.log(`xe: ${this.xe}, ye: ${this.ye}`);
+
+      document.getElementById("eye_iris").style.transform = `translateX(${this.xe}px) translateY(${this.ye}px)`;
+      //this.iris.style.transform = `translateX(${this.xe}px) translateY(${this.ye}px)`;
     }
   }
 }
@@ -76,19 +105,18 @@ export default {
 </script>
 
 <style scoped>
-svg {
-  width:  100px;
-  height: 80px;
-  position: absolute;
-  left: 100px;
-  top: 450px;
-}
-#leftEye {
-  top:  100px;
-  left: 100px;
-}
-#rightEye {
-  top:  100px;
-  left: 250px;
-}
+  svg {
+    width:  100px;
+    height: 80px;
+    position: absolute;
+    left: 100px;
+    top: 450px;
+  }
+  #all-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
 </style>
